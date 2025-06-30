@@ -1,0 +1,20 @@
+name: Build and Push Docker Images
+on:
+   [workflow_dispatch]
+
+jobs:
+  publish_images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build and push backend image
+        run: docker build -t imranawsdevops/devops-qr-code-backend:latest ./api
+
+
+      - name: push backend image
+        
+        run: |
+            docker login -u imranawsdevops -p ${{ secrets.DOCKER_HUB_TOKEN }}
+            docker push imranawsdevops/devops-qr-code-backend:latest
