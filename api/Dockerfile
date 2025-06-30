@@ -1,6 +1,6 @@
 FROM python:3.9
 
-# Set the working directory in the container
+# Set the working directory in the containers
 WORKDIR /usr/src/app
 
 # Copy the dependencies file to the working directory
