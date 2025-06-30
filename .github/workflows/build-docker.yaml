@@ -1,20 +1,24 @@
-name: Build and Push Docker Images
+name: Build and Publish image to Docker Hub
 on:
-   [workflow_dispatch]
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/Dockerfile'
+      - 'front-end-nextjs/Dockerfile'
 
 jobs:
   publish_images:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build and push backend image
-        run: docker build -t ./api imranawsdevops/devops-qr-code-backend:latest 
-
-
-      - name: push backend image
-        
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build image
         run: |
-            docker login -u imranawsdevops -p ${{ secrets.DOCKER_HUB_TOKEN }}
-            docker push imranawsdevops/devops-qr-code-backend:latest
+          docker build ./api/ -t imranawsdevops/devops-qr-code-backend:latest
+          docker build ./front-end-nextjs/ -t imranawsdevops/devops-qr-code-frontend:latest
+      - name: push image to docker hub
+        run: |
+          docker login -u imranawsdevops -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push imranawsdevops/devops-qr-code-backend:latest
+          docker push imranawsdevops/devops-qr-code-frontend:latest
