@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v4
       - name: build image
         run: |
-          docker build ./api/ -t imranawsdevops/devops-qr-code-backend:latest
-          docker build ./front-end-nextjs/ -t imranawsdevops/devops-qr-code-frontend:latest
+          docker build -t imranawsdevops/devops-qr-code-backend:latest ./api
+          docker build -t imranawsdevops/devops-qr-code-frontend:latest ./front-end-nextjs/
       - name: push image to docker hub
         run: |
           docker login -u imranawsdevops -p ${{ secrets.DOCKER_HUB_TOKEN }}
